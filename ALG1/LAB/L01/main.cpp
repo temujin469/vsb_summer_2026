@@ -1,21 +1,27 @@
 #include <iostream>
 using namespace std;
 
-#define Capacita 100
+// #define Capacita 100
+const int Capacita = 100;
 
-class Stack {
+template <typename T>
+class Stack
+{
 private:
-    char data[Capacita];
+    T data[Capacita];
     int top;
 
 public:
-    Stack() {
+    Stack()
+    {
         top = -1;
     }
 
     // Přidání prvku do zásobníku
-    void push(int x) {
-        if (top + 1 >= Capacita) {
+    void push(T x)
+    {
+        if (top + 1 >= Capacita)
+        {
             cout << "Stack Overflow" << endl;
             return;
         }
@@ -23,8 +29,10 @@ public:
     }
 
     // Odebrání prvku ze zásobníku
-    int pop() {
-        if (top < 0) {
+    T pop()
+    {
+        if (top < 0)
+        {
             cout << "Stack Underflow" << endl;
             return -1;
         }
@@ -33,8 +41,10 @@ public:
     }
 
     // Vrátí horní prvek
-    int peek() {
-        if (top < 0) {
+    T peek()
+    {
+        if (top < 0)
+        {
             cout << "Zasobnik je prazdny" << endl;
             return -1;
         }
@@ -42,37 +52,55 @@ public:
     }
 
     // Kontrola, zda je zásobník prázdný
-    bool isEmpty() {
+    bool isEmpty()
+    {
         return (top < 0);
     }
 };
 
-bool checkParity(string str){
-    Stack stack;
-    for(int i = 0;i< str.length();i++){
-        if(str[i] == '('){
+bool checkParity(string str)
+{
+    Stack<char> stack;
+    // Stack<int> * stack = new Stack<int>();
+    for (int i = 0; i < str.length(); i++)
+    {
+        if (str[i] == '(')
+        {
             stack.push(str[i]);
         }
-        else if(str[i] == ')'){
-            int top = stack.pop();
-            if(to)
+        else if (str[i] == ')')
+        {
+            if (stack.isEmpty())
+            {
+                return false;
+            }
             stack.pop();
         }
     }
+
+    return stack.isEmpty();
 }
 
-int main() {
-    Stack stack;
+int main()
+{
+    Stack<int> stack;
 
-    stack.push(5);
-    stack.push(10);
-    stack.push(15);
+    // stack.push(5);
+    // stack.push(10);
+    // stack.push(15);
 
-    //vrchol
-    cout << "Horni prvek: " << stack.peek() << endl;
+    // // vrchol
+    // cout << "Horni prvek: " << stack.peek() << endl;
 
-    stack.pop();
-    cout << "Horni prvek po pop: " << stack.peek() << endl;
+    // stack.pop();
+    // cout << "Horni prvek po pop: " << stack.peek() << endl;
+    // delete stack;
+
+    // for chars
+    if (checkParity("(((())))"))
+        cout << "Zavorky jsou vyvazene" << endl;
+    else
+        cout << "Zavorky nejsou vyvazene" << endl;
 
     return 0;
 }
