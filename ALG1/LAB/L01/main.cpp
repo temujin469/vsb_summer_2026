@@ -1,4 +1,5 @@
 #include <iostream>
+#include <stack>
 using namespace std;
 
 // #define Capacita 100
@@ -87,7 +88,7 @@ int gcd(int m, int n)
     {
         return m;
     }
-            // 12, 60%12=0
+    // 12, 60%12=0
     return gcd(n, m % n);
 }
 
@@ -107,10 +108,102 @@ void bubbleSort(int *pole, int N)
     }
 }
 
+// The Tower of Hanoi is a puzzle with:
+
+// 3 rods (A, B, C)
+
+// N disks of different sizes
+
+// Rules:
+
+// Only one disk can be moved at a time
+
+// You can only move the top disk of a stack
+
+// A bigger disk can never be placed on a smaller disk
+
+// Goal:
+
+// Move all disks from rod A → rod C using rod B as auxiliary.
+class TowersOfHanoi
+{
+    int N;
+    stack<int> A;
+    stack<int> B;
+    stack<int> C;
+
+    TowersOfHanoi(int N)
+    {
+        this->N = N;
+
+        for (int i = N; i > 0; i--)
+        {
+            // A: [3,2,1]
+            // B: []
+            // C: []
+            A.push(i);
+        }
+    }
+
+    bool isMoveValid(stack<int> from, stack<int> to)
+    {   
+        // destination stack is empty, OR
+        if (to.empty())
+            return true;
+        if (from.empty())
+            return false;
+
+            // the top disk on from is smaller than the top disk on to
+        return from.top() < to.top();
+    }
+
+    void moveDisk(stack<int>& from, stack<int>& to)
+    {
+        if (isMoveValid(from, to))
+        {
+            to.push(from.top());
+            from.pop();
+        }
+        else
+        {
+            from.push(to.top());
+            to.pop();
+        }
+    }
+
+
+    // Move N disks from A → C using B
+    void solve()
+    {
+        solve(A, B, C, N);
+    }
+
+    void print() {};
+
+    void solve(stack<int> from, stack<int> aux, stack<int> to, int N)
+    {
+        if (N == 1)
+        {
+            moveDisk(from, to);
+            print();
+            return;
+        }
+        solve(from, to, aux, N - 1);
+        moveDisk(from, to);
+        print();
+        solve(aux, from, to, N - 1);
+    }
+};
+
 int main()
 {
 
+    TowersOfHanoi towers(5);
+    cout << "----------------------------" << endl;
+
     cout << gcd(60, 12) << endl;
+
+    cout << "----------------------------" << endl;
 
     Stack<int> stack;
 
