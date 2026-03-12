@@ -81,8 +81,37 @@ bool checkParity(string str)
     return stack.isEmpty();
 }
 
+int gcd(int m, int n)
+{
+    if (n == 0)
+    {
+        return m;
+    }
+            // 12, 60%12=0
+    return gcd(n, m % n);
+}
+
+void bubbleSort(int *pole, int N)
+{
+    for (int i = 0; i < N; i++)
+    {
+        for (int j = 0; j < N - 1; j++)
+        {
+            if (pole[j] > pole[j + 1])
+            {
+                int temp = pole[j];
+                pole[j] = pole[j + 1];
+                pole[j + 1] = temp;
+            }
+        }
+    }
+}
+
 int main()
 {
+
+    cout << gcd(60, 12) << endl;
+
     Stack<int> stack;
 
     // stack.push(5);
